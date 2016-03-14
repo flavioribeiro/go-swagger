@@ -23,6 +23,7 @@ import (
 	"path/filepath"
 	"sort"
 
+	"github.com/go-swagger/go-swagger/httpkit"
 	"github.com/go-swagger/go-swagger/swag"
 )
 
@@ -51,11 +52,15 @@ func GenerateClient(name string, modelNames, operationIDs []string, opts GenOpts
 
 	defaultScheme := opts.DefaultScheme
 	if defaultScheme == "" {
-		defaultScheme = "http"
+		defaultScheme = sHTTP
 	}
 	defaultProduces := opts.DefaultProduces
 	if defaultProduces == "" {
-		defaultProduces = "application/json"
+		defaultProduces = httpkit.JSONMime
+	}
+	defaultConsumes := opts.DefaultConsumes
+	if defaultConsumes == "" {
+		defaultConsumes = httpkit.JSONMime
 	}
 
 	generator := appGenerator{
@@ -73,6 +78,7 @@ func GenerateClient(name string, modelNames, operationIDs []string, opts GenOpts
 		Principal:       opts.Principal,
 		DefaultScheme:   defaultScheme,
 		DefaultProduces: defaultProduces,
+		DefaultConsumes: defaultConsumes,
 	}
 	generator.Receiver = "o"
 

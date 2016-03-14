@@ -122,6 +122,7 @@ type appGenerator struct {
 	DumpData        bool
 	DefaultScheme   string
 	DefaultProduces string
+	DefaultConsumes string
 	GenOpts         *GenOpts
 }
 
@@ -642,7 +643,7 @@ func (a *appGenerator) makeCodegenApp() (GenApp, error) {
 	sort.Sort(opGroups)
 
 	log.Println("planning meta data and facades")
-	defaultConsumes := "application/json"
+	defaultConsumes := a.DefaultConsumes
 	rc := a.SpecDoc.RequiredConsumes()
 	if len(rc) > 0 {
 		defaultConsumes = rc[0]
