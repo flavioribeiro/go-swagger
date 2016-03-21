@@ -643,11 +643,6 @@ func (a *appGenerator) makeCodegenApp() (GenApp, error) {
 	sort.Sort(opGroups)
 
 	log.Println("planning meta data and facades")
-	defaultConsumes := a.DefaultConsumes
-	rc := a.SpecDoc.RequiredConsumes()
-	if len(rc) > 0 {
-		defaultConsumes = rc[0]
-	}
 
 	var collectedSchemes []string
 	var extraSchemes []string
@@ -679,7 +674,7 @@ func (a *appGenerator) makeCodegenApp() (GenApp, error) {
 		Info:                sw.Info,
 		Consumes:            consumes,
 		Produces:            produces,
-		DefaultConsumes:     defaultConsumes,
+		DefaultConsumes:     a.DefaultConsumes,
 		DefaultProduces:     a.DefaultProduces,
 		DefaultImports:      defaultImports,
 		SecurityDefinitions: security,
